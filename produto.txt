@@ -1,0 +1,9 @@
+codigo;nome;preco
+1;Água;4.50
+2;Refrigerante;6.00
+3;Cerveja;8.00
+4;Salgadinho;10.00
+5;Chocolate;5.50
+6;Biscoito Salgado;7.50
+7;Sorvete Pote;15.00
+8;Suco de Frutas;5.00

@@ -1,0 +1,11 @@
+diaInicio;diaFim;cliente;numeroQuarto;status
+10;15;Joao Silva;101;C
+20;25;Maria Oliveira;105;C
+25;28;Carlos Souza;103;O
+2;5;Thiago Tassinari;107;C
+17;19;Ana Rodrigues;101;O
+1;5;Thomas Junior;110;I
+21;23;Patrick Moreira;105;C
+27;30;Maria Oliveira;105;C
+20;20;Jorge Pereira;106;O
+26;29;Teste Doido;109;O
