@@ -210,7 +210,7 @@ public class Pousada {
 
                 ArrayList<Integer> consumo = quarto.listaConsumo();
                 StringBuilder consumoStr = new StringBuilder();
-                
+
                 for (int j = 0; j < consumo.size(); j++) {
                     consumoStr.append(consumo.get(j));
 
@@ -270,17 +270,19 @@ public class Pousada {
             for (int i = 0; i < reservas.size(); i++) {
                 Reserva reserva = reservas.get(i);
 
-                String linha = String.format("%d;%d;%s;%d;%c",
-                        reserva.getDiaInicio(),
-                        reserva.getDiaFim(),
-                        reserva.getCliente(),
-                        // getQuarto retorna um objeto quarto, e getNumero pega o numero do objeto
-                        // quarto
-                        reserva.getQuarto().getNumero(),
-                        reserva.getStatus());
+                // escrever só as reservas ativas
+                if (reserva.getStatus() == 'A' || reserva.getStatus() == 'I') {
+                    String linha = String.format("%d;%d;%s;%d;%c",
+                            reserva.getDiaInicio(),
+                            reserva.getDiaFim(),
+                            reserva.getCliente(),
+                            reserva.getQuarto().getNumero(),
+                            reserva.getStatus());
 
-                buffer.write(linha);
-                buffer.write("\n");
+                    buffer.write(linha);
+                    buffer.write("\n");
+                }
+
             }
 
             System.out.println("Dados das reservas salvos com sucesso!");

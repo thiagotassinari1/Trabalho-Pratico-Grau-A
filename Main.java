@@ -171,7 +171,8 @@ public class Main {
                     pousada.salvaDados();
                     break;
                 case 0:
-                    System.out.print("Saindo do programa.");
+                    System.out.println("Saindo do programa.");
+                    pousada.salvaDados();
                     break;
                 default:
                     System.out.print("Opção desconhecida.");
