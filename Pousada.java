@@ -152,8 +152,7 @@ public class Pousada {
                     reservas.add(novaReserva);
 
                 } else {
-                    System.err.println(
-                            "Erro: Quarto com número " + numeroQuarto + " não encontrado. Reserva não carregada.");
+                    System.err.println("Quarto com número " + numeroQuarto + " não encontrado. Reserva não carregada.");
                 }
 
             }
@@ -347,21 +346,57 @@ public class Pousada {
     }
 
     public void consultaReserva(int data, String cliente, int quarto) {
-        Reserva reservaEncontrada = null;
+        int reservasEncontradas = 0;
+
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = reservas.get(i);
-            if ((data >= reserva.getDiaInicio() && data <= reserva.getDiaFim())
-                    && cliente.trim().equalsIgnoreCase(reserva.getCliente().trim())
-                    && quarto == reserva.getQuarto().getNumero()) {
-                reservaEncontrada = reserva;
-                System.out.println(reservaEncontrada.toString());
-                return;
+
+            if (reserva.getStatus() == 'A' || reserva.getStatus() == 'I') {
+
+                boolean dataCorresponde = true;
+                boolean clienteCorresponde = true;
+                boolean quartoCorresponde = true;
+
+                if (data != 0) {
+
+                    if (data >= reserva.getDiaInicio() && data <= reserva.getDiaFim()) {
+                        dataCorresponde = true;
+                    } else {
+                        dataCorresponde = false;
+                    }
+                }
+
+                if (!cliente.isEmpty()) {
+
+                    if (cliente.equalsIgnoreCase(reserva.getCliente())) {
+                        clienteCorresponde = true;
+                    } else {
+                        clienteCorresponde = false;
+                    }
+                }
+
+                if (quarto != 0) {
+
+                    if (quarto == reserva.getQuarto().getNumero()) {
+                        quartoCorresponde = true;
+                    } else {
+                        quartoCorresponde = false;
+                    }
+                }
+
+                // se a reserva corresponder a todos os filtros preenchidos
+                if (dataCorresponde && clienteCorresponde && quartoCorresponde) {
+                    if (reservasEncontradas == 0) {
+                        System.out.println("\nReservas Encontradas:\n");
+                    }
+                    System.out.println(reserva.toString());
+                    reservasEncontradas++;
+                }
             }
         }
 
-        if (reservaEncontrada == null) {
-            System.out.println("\nReserva não encontrada.");
-            return;
+        if (reservasEncontradas == 0) {
+            System.out.println("\nNenhuma reserva ativa encontrada para os critérios informados.");
         }
     }
 
@@ -405,13 +440,12 @@ public class Pousada {
         salvaDados();
     }
 
-    // tem que colocar de limpar o consumo caso cancele a reserva
     public void cancelaReserva(String cliente) {
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = reservas.get(i);
 
             if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && (reserva.getStatus() == 'A' || reserva.getStatus() == 'I')) {
+                    && (reserva.getStatus() == 'A')) {
                 System.out.println("\nReserva cancelada com sucesso!\n");
                 reserva.setStatus('C');
                 salvaDados();
@@ -424,48 +458,7 @@ public class Pousada {
                     && reserva.getStatus() == 'O') {
                 System.out.println("\nCheck-Out já realizado.");
                 return;
-            }
-        }
-
-        // procedimento padrão caso não caia no if do for
-        System.out.println("\nNenhuma reserva encontrada.");
-    }
-
-    // acho que ta parando na primeira reserva que acha, ai se tiver duas reservas e
-    // a primeira for C, ele nao faz o check in da outra
-    // acho q tem q fazer aqla parada de tipo reservaAtiva == null, ai faz toda
-    // verificação e substitui, e nao para na primeira
-    public void realizaCheckIn(String cliente) {
-        for (int i = 0; i < reservas.size(); i++) {
-            Reserva reserva = reservas.get(i);
-
-            if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && reserva.getStatus() == 'A') {
-                System.out.println("\nCheck-in realizado com sucesso!\n");
-                reserva.setStatus('I');
-
-                int qtdDias = (reserva.getDiaFim() - reserva.getDiaInicio()) + 1;
-                float vlrTotalDiarias = reserva.getQuarto().getDiaria() * qtdDias;
-
-                salvaDados();
-
-                System.out
-                        .println("\nData inicial: " + reserva.getDiaInicio() + "\nData Final: " + reserva.getDiaFim());
-                System.out.println("Quantidade de dias reservados: %d".formatted(qtdDias));
-                System.out.println("Valor total das diárias: %.2f".formatted(vlrTotalDiarias));
-                System.out.println(reserva.getQuarto().toString());
-
-                return;
-            } else if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && reserva.getStatus() == 'C') {
-                System.out.println("\nA reserva não está ativa.");
-                return;
-            } else if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && reserva.getStatus() == 'O') {
-                System.out.println("\nCheck-Out já realizado.");
-                return;
-            } else if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && reserva.getStatus() == 'I') {
+            } else if (reserva.getStatus() == 'I') {
                 System.out.println("\nCheck-In já realizado.");
                 return;
             }
@@ -473,6 +466,57 @@ public class Pousada {
 
         // procedimento padrão caso não caia no if do for
         System.out.println("\nNenhuma reserva encontrada.");
+    }
+
+    public void realizaCheckIn(String cliente) {
+
+        Reserva reservaParaCheckIn = null;
+
+        // procurar alguma reserva ativa
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva reserva = reservas.get(i);
+            if (reserva.getCliente().equalsIgnoreCase(cliente) && reserva.getStatus() == 'A') {
+                reservaParaCheckIn = reserva;
+                break;
+            } else if (reserva.getCliente().equalsIgnoreCase(cliente)
+                    && reserva.getStatus() == 'I') {
+                System.out.println("\nCheck-In já realizado.");
+                return;
+            }
+        }
+
+        if (reservaParaCheckIn == null) {
+            System.out.println("\nNenhuma reserva encontrada para o cliente " + cliente + ".");
+            return;
+        }
+
+        Quarto quartoReserva = reservaParaCheckIn.getQuarto();
+
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva outraReserva = reservas.get(i);
+
+            // confere se já tem outra reserva para o quarto X que esteja com o check-in
+            // feito
+            if (outraReserva.getQuarto().getNumero() == quartoReserva.getNumero() && outraReserva.getStatus() == 'I') {
+                System.out.println("\nO quarto " + quartoReserva.getNumero() + " já está ocupado.");
+                return;
+            }
+        }
+
+        // procedimento padrão caso tenha a reserva ativa e o quarto esteja livre
+        System.out.println("\nCheck-in realizado com sucesso!\n");
+        reservaParaCheckIn.setStatus('I');
+
+        int qtdDias = (reservaParaCheckIn.getDiaFim() - reservaParaCheckIn.getDiaInicio()) + 1;
+        float vlrTotalDiarias = reservaParaCheckIn.getQuarto().getDiaria() * qtdDias;
+
+        System.out.println("Data inicial: " + reservaParaCheckIn.getDiaInicio() + "\nData Final: "
+                + reservaParaCheckIn.getDiaFim());
+        System.out.println("Quantidade de dias reservados: " + qtdDias);
+        System.out.println("Valor total das diárias: R$ " + String.format("%.2f", vlrTotalDiarias));
+        System.out.println(reservaParaCheckIn.getQuarto().toString());
+
+        salvaDados();
     }
 
     public void realizaCheckOut(String cliente) {
@@ -490,26 +534,24 @@ public class Pousada {
             return;
         }
 
-        // 1. Calcular o valor total das diárias
+        // calculo vlr das diárias
         int qtdDias = (reservaAtiva.getDiaFim() - reservaAtiva.getDiaInicio()) + 1;
         float vlrTotalDiarias = reservaAtiva.getQuarto().getDiaria() * qtdDias;
 
-        // 2. Calcular o valor total dos consumos, usando o método do Quarto
+        // calculor vlr consumos
         double vlrTotalConsumos = reservaAtiva.getQuarto().valorTotalConsumo(produtos);
+
+        // valor total consumo + diária
         double vlrTotalGeral = vlrTotalDiarias + vlrTotalConsumos;
 
-        // 3. Exibir o resumo para o cliente
         System.out.println("\n--- Check-Out de " + cliente + " ---");
         System.out.println("Diárias: R$ " + String.format("%.2f", vlrTotalDiarias));
         System.out.println("Consumos: R$ " + String.format("%.2f", vlrTotalConsumos));
-        System.out.println("TOTAL GERAL: R$ " + String.format("%.2f", vlrTotalGeral));
+        System.out.println("Total: R$ " + String.format("%.2f", vlrTotalGeral));
         System.out.println("-------------------------------------");
 
-        // 4. Mudar o status da reserva e limpar o consumo do quarto
-        reservaAtiva.setStatus('O'); // 'O' de "Out" (check-out)
+        reservaAtiva.setStatus('O');
         reservaAtiva.getQuarto().limpaConsumo();
-
-        // 5. Salvar os dados atualizados
         salvaDados();
 
         System.out.println("\nCheck-Out realizado com sucesso! Quarto liberado.");

@@ -15,25 +15,19 @@ public class Main {
     }
 
     public static void consultaReserva(Scanner sc, Pousada pousada) {
-        // arrumar pra não precisar informar todos os dados obrigatóriamente
-        // colocar if no metodo dentro da pousada, pra caso esteja faltando alguma info,
-        // ele faz só com as que tem
-        // tipo: if (!data) {
-        // faz com cliente e quarto
-        // }
-        System.out.println("Informe uma data, nome do cliente e número do quarto para consulta:");
-        System.out.print("Data: ");
+        System.out.println("Informe uma data e/ou nome do cliente e/ou número do quarto para consulta:");
+        System.out.println("Pressione Enter para ignorar um campo.");
+
+        System.out.print("Informe a data (Digite 0 para ignorar): ");
         int data = sc.nextInt();
+        sc.nextLine(); 
 
-        sc.nextLine();
-
-        System.out.print("Nome do cliente: ");
+        System.out.print("Informe o nome do cliente (Pressione Enter para ignorar): ");
         String cliente = sc.nextLine().trim();
 
-        System.out.print("Número do quarto: ");
+        System.out.print("Informe o número do quarto (Digite 0 para ignorar): ");
         int quarto = sc.nextInt();
-
-        sc.nextLine();
+        sc.nextLine(); 
 
         pousada.consultaReserva(data, cliente, quarto);
     }
