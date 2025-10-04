@@ -359,7 +359,7 @@ public class Pousada {
 
                 if (data != 0) {
 
-                    if (data >= reserva.getDiaInicio() && data <= reserva.getDiaFim()) {
+                    if (Data.diaEstaNoIntervalo(data, reserva.getDiaInicio(), reserva.getDiaFim())) {
                         dataCorresponde = true;
                     } else {
                         dataCorresponde = false;
