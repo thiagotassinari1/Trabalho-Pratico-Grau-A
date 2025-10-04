@@ -328,7 +328,7 @@ public class Pousada {
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = reservas.get(i);
 
-            if (data >= reserva.getDiaInicio() && data <= reserva.getDiaFim()) {
+            if (Data.diaEstaNoIntervalo(data, reserva.getDiaInicio(), reserva.getDiaFim())) {
                 if (reserva.getQuarto().getNumero() == quarto
                         && (reserva.getStatus() == 'A' || reserva.getStatus() == 'I')) {
                     disponivel = false;
@@ -412,8 +412,8 @@ public class Pousada {
 
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = reservas.get(i);
-            if ((diaInicio >= reserva.getDiaInicio() && diaInicio <= reserva.getDiaFim())
-                    || (diaFim >= reserva.getDiaInicio() && diaFim <= reserva.getDiaFim())) {
+            if (Data.diaEstaNoIntervalo(diaInicio, reserva.getDiaInicio(), reserva.getDiaFim())
+                    || Data.diaEstaNoIntervalo(diaFim, reserva.getDiaInicio(), reserva.getDiaFim())) {
                 if (reserva.getQuarto().getNumero() == quarto
                         && (reserva.getStatus() == 'A' || reserva.getStatus() == 'I')) {
                     System.out.println("\nQuarto já reservado para a data informada.");
@@ -507,7 +507,7 @@ public class Pousada {
         System.out.println("\nCheck-in realizado com sucesso!\n");
         reservaParaCheckIn.setStatus('I');
 
-        int qtdDias = (reservaParaCheckIn.getDiaFim() - reservaParaCheckIn.getDiaInicio()) + 1;
+        int qtdDias = Data.calcularTotalDiarias(reservaParaCheckIn.getDiaInicio(), reservaParaCheckIn.getDiaFim());
         float vlrTotalDiarias = reservaParaCheckIn.getQuarto().getDiaria() * qtdDias;
 
         System.out.println("Data inicial: " + reservaParaCheckIn.getDiaInicio() + "\nData Final: "
@@ -535,7 +535,7 @@ public class Pousada {
         }
 
         // calculo vlr das diárias
-        int qtdDias = (reservaAtiva.getDiaFim() - reservaAtiva.getDiaInicio()) + 1;
+        int qtdDias = Data.calcularTotalDiarias(reservaAtiva.getDiaInicio(), reservaAtiva.getDiaFim());
         float vlrTotalDiarias = reservaAtiva.getQuarto().getDiaria() * qtdDias;
 
         // calculor vlr consumos
