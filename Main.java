@@ -104,7 +104,7 @@ public class Main {
     }
 
     public static void realizaCheckOut(Scanner sc, Pousada pousada) {
-        System.out.println("Informe o nome do cliente para fazer o check-out: ");
+        System.out.print("Informe o nome do cliente para fazer o check-out: ");
         sc.nextLine();
         String cliente = sc.nextLine().trim();
 

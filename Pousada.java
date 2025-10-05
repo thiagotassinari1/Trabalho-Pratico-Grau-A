@@ -441,27 +441,31 @@ public class Pousada {
     }
 
     public void cancelaReserva(String cliente) {
+
+        String statusReserva = "";
+
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = reservas.get(i);
 
             if (reserva.getCliente().equalsIgnoreCase(cliente)
                     && (reserva.getStatus() == 'A')) {
-                System.out.println("\nReserva cancelada com sucesso!\n");
+                // System.out.println("\nReserva cancelada com sucesso!\n");
+                statusReserva = "ativa";
                 reserva.setStatus('C');
                 salvaDados();
-                return;
             } else if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && reserva.getStatus() == 'C') {
-                System.out.println("\nReserva já cancelada.");
-                return;
-            } else if (reserva.getCliente().equalsIgnoreCase(cliente)
-                    && reserva.getStatus() == 'O') {
-                System.out.println("\nCheck-Out já realizado.");
-                return;
-            } else if (reserva.getStatus() == 'I') {
-                System.out.println("\nCheck-In já realizado.");
-                return;
+                    && (reserva.getStatus() == 'I')) {
+                // System.out.println("\nCheck-In já realizado.");
+                statusReserva = "checkIn";
             }
+        }
+
+        if (statusReserva == "ativa") {
+            System.out.println("\nReserva cancelada com sucesso!\n");
+            return;
+        } else if (statusReserva == "checkIn") {
+            System.out.println("\nCheck-In já realizado.");
+            return;
         }
 
         // procedimento padrão caso não caia no if do for
