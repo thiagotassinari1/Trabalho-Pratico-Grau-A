@@ -114,12 +114,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Crie um objeto da classe Pousada
         Pousada pousada = new Pousada();
 
         System.out.println("Carregando dados iniciais...");
 
-        // Carregar dados iniciais
         pousada.carregarDados();
 
         System.out.println("Carregamento de dados concluído.");

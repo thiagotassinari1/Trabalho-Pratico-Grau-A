@@ -1,3 +1,4 @@
 diaInicio;diaFim;cliente;numeroQuarto;status
-10;15;Joao Silva;101;I
-12;20;Thiago Silva;107;I
+10;15;Cliente Normal;101;I
+28;5;Cliente ViraMes;102;I
+25;8;novo cliente;102;A

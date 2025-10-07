@@ -13,11 +13,20 @@ public class Data {
     }
 
     public static boolean diaEstaNoIntervalo(int diaConsulta, int diaInicio, int diaFim) {
-
         if (diaFim >= diaInicio) {
-            return diaConsulta >= diaInicio && diaConsulta <= diaFim;
+
+            if (diaConsulta >= diaInicio && diaConsulta <= diaFim) {
+                return true;
+            } else {
+                return false;
+            }
+
         } else {
-            return diaConsulta >= diaInicio || diaConsulta <= diaFim;
+            if (diaConsulta >= diaInicio || diaConsulta <= diaFim) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
