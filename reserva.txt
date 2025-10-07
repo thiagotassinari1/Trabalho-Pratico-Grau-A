@@ -1,4 +1,2 @@
 diaInicio;diaFim;cliente;numeroQuarto;status
-10;15;Cliente Normal;101;I
-28;5;Cliente ViraMes;102;I
-25;8;novo cliente;102;A
+10;15;Thiago;101;A

@@ -18,7 +18,7 @@ public class Main {
         System.out.println("Informe uma data e/ou nome do cliente e/ou número do quarto para consulta:");
         System.out.println("Pressione Enter para ignorar um campo.");
 
-        System.out.print("Informe a data (Digite 0 para ignorar): ");
+        System.out.print("Informe a data (1 a 30) (Digite 0 para ignorar): ");
         int data = sc.nextInt();
         sc.nextLine(); 
 
@@ -34,10 +34,10 @@ public class Main {
 
     public static void realizaReserva(Scanner sc, Pousada pousada) {
         System.out.println("Informe uma data inical, data final, nome do cliente e número do quarto para reserva:");
-        System.out.print("Data inicial: ");
+        System.out.print("Data inicial (1 a 30): ");
         int diaInicio = sc.nextInt();
 
-        System.out.print("Data final: ");
+        System.out.print("Data final (1 a 30): ");
         int diaFim = sc.nextInt();
 
         System.out.print("Nome do cliente: ");

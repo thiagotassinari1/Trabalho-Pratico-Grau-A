@@ -12,6 +12,8 @@ public class Data {
         }
     }
 
+
+    // true = conflito
     public static boolean diaEstaNoIntervalo(int diaConsulta, int diaInicio, int diaFim) {
         if (diaFim >= diaInicio) {
 
@@ -28,5 +30,31 @@ public class Data {
                 return false;
             }
         }
+    }
+
+    public static boolean reservasConflitam(int inicioReservaExistente, int fimReservaExistente, int inicioNovaReserva, int fimNovaReserva) {
+        
+        if (fimNovaReserva >= inicioNovaReserva) {
+            for (int i = inicioNovaReserva; i <= fimNovaReserva; i++) {
+                
+                if (diaEstaNoIntervalo(i, inicioReservaExistente, fimReservaExistente)) {
+                    return true;
+                }
+            }
+        } else { 
+            for (int i = inicioNovaReserva; i <= 30; i++) {
+                if (diaEstaNoIntervalo(i, inicioReservaExistente, fimReservaExistente)) {
+                    return true;
+                }
+            }
+            for (int i = 1; i <= fimNovaReserva; i++) {
+                if (diaEstaNoIntervalo(i, inicioReservaExistente, fimReservaExistente)) {
+                    return true;
+                }
+            }
+        }
+
+        // se não conflitar com nada
+        return false;
     }
 }
