@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-green)
 
-Este projeto é um sistema básico para o gerenciamento de uma pousada, permitindo o controle de quartos, reservas, consumo e faturamento. Foi desenvolvido como o **Trabalho Prático do Grau A** da Escola Politécnica da **Universidade do Vale do Rio dos Sinos (Unisinos)**.
+Este projeto é um sistema básico para o gerenciamento de uma pousada, permitindo o controle de quartos, reservas, consumo e faturamento. Foi desenvolvido como o **Trabalho Prático do Grau A** na cadeira de **Programação Orientada a Objetos** da Escola Politécnica da **Universidade do Vale do Rio dos Sinos (Unisinos)**.
 
 O objetivo central do projeto é aplicar conceitos de Programação Orientada a Objetos e implementar a **persistência de dados em arquivos de texto tabulados**.
 
